@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="action-bar">
+        <h1 class="title">Inspirational Quotes</h1>
+        <a href="{{ url_for('create_quote') }}" class="btn btn-primary">Add New Quote</a>
+    </div>
+    
+    {% if quotes %}
+        <div class="quote-grid">
+            {% for quote in quotes %}
+                <div class="card">
+                    <div class="card-body">
+                        <p class="quote-text">"{{ quote.text }}"</p>
+                        <p class="quote-author">— {{ quote.author }}</p>
+                        <p class="quote-date">{{ quote.created_at.strftime('%B %d, %Y') }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('view_quote', id=quote.id) }}" class="btn btn-primary">View</a>
+                        <div>
+                            <a href="{{ url_for('edit_quote', id=quote.id) }}" class="btn btn-secondary">Edit</a>
+                            <a href="{{ url_for('delete_quote', id=quote.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card">
+            <div class="card-body">
+                <p>No quotes found. Be the first to add one!</p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
